@@ -312,6 +312,7 @@ var Express = function () {
             this.getEligibility();
             this.getRegister();
             this.getDpaStatus();
+            var port =process.env.PORT || 3000;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
                 // var certificate = _fs2.default.readFileSync(_constants.ENV.SSL_CERT, 'utf8').toString();
@@ -321,14 +322,15 @@ var Express = function () {
                 //     credentials.ca = certificateAuthority;
                 // }
             //
+            
                 //_https2.default.createServer(credentials,this.express).listen(_constants.ENV.APP_PORT, function () {
-                  _http2.default.createServer(this.express).listen(_constants.ENV.APP_PORT, function (){
+                  _http2.default.createServer(this.express).listen(port, function (){
                    //console.log(1);
-                    return console.info('server started on port ' + _constants.ENV.APP_PORT + ' (' + _constants.ENV.ENV + ')');
+                    return console.info('server started on port ' + port+ ' (' + _constants.ENV.ENV + ')');
                 });
             } else {
-                this.express.listen(_constants.ENV.APP_PORT, function () {
-                    return console.info('server started on port ' + _constants.ENV.APP_PORT + ' (' + _constants.ENV.ENV + ')');
+                this.express.listen(port, function () {
+                    return console.info('server started on port ' +port + ' (' + _constants.ENV.ENV + ')');
                 });
              
            
