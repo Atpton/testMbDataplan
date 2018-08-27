@@ -124,11 +124,11 @@ var Express = function () {
         key: 'getCpid',
         value: function getCpid() {
             // route to dialogflow
-            this.express.get('/CPID_URL', function (req, res, next) {
+            this.express.get('/getcpid', function (req, res, next) {
             let app = req.query.app;
             console.info(`appID :${app}`);
             if(app){
-              var key =_fs.readFileSync('./privatekey/p.key', 'utf8').toString();
+              var key =_fs.readFileSync('./privatekey/privatekey.key', 'utf8').toString();
                 console.log(key);
                 var CPID = _jsonwebtoken2.default.sign({
                     "iss":"dpi-dpa-mobile-dataplan-adapto@sustained-node-213113.iam.gserviceaccount.com",
@@ -150,7 +150,7 @@ var Express = function () {
         key: 'getPlanStatus',
         value: function getPlanStatus() {
             // route to dialogflow
-            this.express.get('/DPA_URL/:userKey/planStatus', function (req, res, next) {
+            this.express.get('/:userKey/planStatus', function (req, res, next) {
             let key_type = req.query.key_type;
             let userKey = req.params.userKey;
               console.log("planStatus");
@@ -266,7 +266,7 @@ var Express = function () {
         key: 'getEligibility',
         value: function getEligibility() {
             // route to dialogflow
-            this.express.get('/DPA/:userKey/Eligibility/:planId', function (req, res, next) {
+            this.express.get('/:userKey/Eligibility/:planId', function (req, res, next) {
             let key_type = req.query.key_type;
             let userKey = req.params.userKey;
             let planId = req.params.planId;
