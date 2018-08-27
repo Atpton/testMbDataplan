@@ -13,8 +13,8 @@
 
   "scripts": {
        "preinstall": "npm install pm2 -g",
-       "precommit": "yarn lint",
-        "prestart": "yarn docs",
+     //   "precommit": "yarn lint",
+       // "prestart": "yarn docs",
         "start": "pm2-runtime pm2-dev.json",
         "dev": "nodemon ./src/index.js --exec babel-node --presets es2015",
         "build": "babel src -d dist --copy-files",
