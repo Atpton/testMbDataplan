@@ -27,6 +27,7 @@ var _https = require('https');
 var _https2 = _interopRequireDefault(_https);
 
 var _axios = require('axios');
+
 var axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -100,6 +101,8 @@ var Express = function () {
         this.getEligibility = this.getEligibility.bind(this);
         this.getRegister = this.getRegister.bind(this);
         this.getDpaStatus = this.getDpaStatus.bind(this);
+        this.getToken = this.getToken.bind(this);
+        this.resToken = this.resToken.bind(this);
         this.listen = this.listen.bind(this);
     }
 
@@ -164,7 +167,36 @@ var Express = function () {
             // route to dialogflow
             this.express.get('/dpaStatus',_outbound.getDpaStatus);
         }
-    } , {
+    },{
+        key: 'getToken',
+        value:  function getToken() {
+            // route to dialogflow
+            this.express.get('/:userKey/getToken',this.resToken);
+        }
+    } ,{
+        key:'resToken',
+        value:async function resToken(req,res){
+                     let userKey = req.params.userKey;
+                      var header = {};
+                       var agent = new _https2.default.Agent({
+                             rejectUnauthorized: false
+                        });
+                      console.info(userKey);
+                    header['Content-Type'] ='application/x-www-form-urlencoded';
+                    header['httpsAgent']=agent;
+                    var body = {};
+                    body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
+                    body['timeout'] = 10000;
+                    body['assertion']='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkcGktZHBhLW1vYmlsZS1kYXRhcGxhbi1hZGFwdG9Ac3VzdGFpbmVkLW5vZGUtMjEzMTEzLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RhdGFwbGFuc2hhcmluZyIsImF1ZCI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92NC90b2tlbiIsImV4cCI6MTUzNTA3ODk1NCwiaWF0IjoxNTM1MDc1MzU0LCJNU0lTRE4iOiIwOTMyNzgwMDE0In0.l3p0FO_UL272zgUPvxpeAtSQ2d7Dd7K4UmAfvS2sEjFHWaM9csVx8jde_yh8lDoINEEUYe6idgSA_y47xi3wJfD84JJwqlbHgtpivrA_TyHEHYRrazffgzn72dZpxLNycCIPDBJtOE6S-x_Gb7bvt0n_rcGJ6ppBtGLhO7zisbFh1ClCJ1NcOxAN5oMbQapl8ag1aSWseWjKAbft4CZ-rtGQrPsXlefLqLptSfZo_OeGXOj0Y70qcNR3ZaTVDCTUylj4DevkJoDC514MDo7uo9ENu18pRNCZ_Bmfx09mZb6n_cu0QNkfLWijasTC4r61Mj_heCHY4UJRN6wJIJU7Iw';
+                    var url = "https://www.googleapis.com/oauth2/v4/token";
+                console.log("body: grant: "+body['grant_type']+"  assert: "+body['assertion']);
+                console.log("Headder"+header['Content-Type']);
+                var resData = await _axios2.default.post(url,body,header);
+                console.log("T");
+                console.log(resData.data);
+                res.json({message:resData.data});
+        }
+    }, {
         key: 'listen',
         value: function listen() {
             this.setConfig();
@@ -178,6 +210,7 @@ var Express = function () {
             this.getEligibility();
             this.getRegister();
             this.getDpaStatus();
+            this.getToken();
             var port =process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
