@@ -182,7 +182,7 @@ var Express = function () {
                              rejectUnauthorized: false
                         });
                       console.info(userKey);
-                    header['Content-Type'] ='application/x-www-form-urlencoded';
+                    header['Content-Type'] ='application/json';
                     header['httpsAgent']=agent;
                     var body = {};
                     body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
