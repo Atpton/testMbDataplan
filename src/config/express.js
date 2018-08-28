@@ -127,7 +127,8 @@ var Express = function () {
             this.express.get('/', function (req, res, next) {
             let app = req.query.app;
             console.info(`appID :${app}`);
-            if(app){
+           let checkAppID  = app && _constants.APPID.APPIDs.findIndex(element => element===app);
+            if(app && checkAppID > -1){
               var key =_fs.readFileSync('./privatekey/privatekey.key', 'utf8').toString();
                 var CPID = _jsonwebtoken2.default.sign({
                     "iss":"dpi-dpa-mobile-dataplan-adapto@sustained-node-213113.iam.gserviceaccount.com",
@@ -140,7 +141,8 @@ var Express = function () {
                  console.log("CPID");
                  res.status(200).json({ cpid: CPID ,"ttlSeconds": 2592000});
             }else{
-                res.status(200).json({message:"without parameter app"});
+                let messageError = (app)?`AppId(${app}) isn't corresponding please check it again`:"without parameter app";
+                res.status(200).json({message:messageError});
             }
      
             });

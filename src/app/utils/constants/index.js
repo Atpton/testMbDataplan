@@ -40,3 +40,17 @@ Object.keys(_networkType).forEach(function (key) {
     }
   });
 });
+
+
+
+var _appId = require('./appId');
+
+Object.keys(_appId).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _appId[key];
+    }
+  });
+});
