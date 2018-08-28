@@ -124,7 +124,7 @@ var Express = function () {
         key: 'getCpid',
         value: function getCpid() {
             // route to dialogflow
-            this.express.get('/getcpid', function (req, res, next) {
+            this.express.get('/', function (req, res, next) {
             let app = req.query.app;
             console.info(`appID :${app}`);
             if(app){
