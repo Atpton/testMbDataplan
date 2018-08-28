@@ -27,3 +27,15 @@ Object.keys(_transaction).forEach(function (key) {
     }
   });
 });
+
+var _axiosService = require('./axiosService');
+
+Object.keys(_axiosService).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _axiosService[key];
+    }
+  });
+});

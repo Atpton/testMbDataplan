@@ -57,6 +57,8 @@ var _middlewares = require('../app/middlewares');
 
 var _constants = require('../app/utils/constants');
 
+var _service = require('../app/utils/class');
+
 var _outbound = require('../app/controllers/outbound');
 
 var _logger = require('./logger');
@@ -176,16 +178,27 @@ var Express = function () {
     } ,{
         key:'resToken',
         value:async function resToken(req,res){
-                     let userKey = req.params.userKey;
-                      var header = {};
-                    header['Content-Type'] ='application/json';
-                    var body = {};
-                    body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
-                    body['timeout'] = 10000;
-                    body['assertion']=userKey;
-                    var url = "https://www.googleapis.com/oauth2/v4/token";
-                var resData = await _axios2.default.post(url,body,header);
-                console.log(resData.data);
+                      let userKey = req.params.userKey;
+                       var header = {'Content-Type':'application/json'};
+                       var body = {
+                           'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                           'timeout':10000,
+                           'assertion':userKey
+                       }
+                       var axiosObj = new _service.axiosService('https://www.googleapis.com/oauth2/v4/token');
+                       axiosObj.setBaseApi('https://www.googleapis.com/oauth2/v4/token');
+                       axiosObj.setHeaders(header);
+                       axiosObj.setBody(body);
+                    
+                //     header['Content-Type'] ='application/json';
+                //     var body = {};
+                //     body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
+                //     body['timeout'] = 10000;
+                //     body['assertion']=userKey;
+                //     var url = "https://www.googleapis.com/oauth2/v4/token";
+                 var resData = await axiosObj.http.post('');
+           
+                  console.log(resData.data);
                 res.json({message:resData.data});
         }
     }, {
