@@ -312,7 +312,7 @@ var Express = function () {
             this.getEligibility();
             this.getRegister();
             this.getDpaStatus();
-            var port =process.env.PORT || 3000;
+            var port =process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
                 // var certificate = _fs2.default.readFileSync(_constants.ENV.SSL_CERT, 'utf8').toString();
