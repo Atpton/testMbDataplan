@@ -129,7 +129,6 @@ var Express = function () {
             console.info(`appID :${app}`);
             if(app){
               var key =_fs.readFileSync('./privatekey/privatekey.key', 'utf8').toString();
-                console.log(key);
                 var CPID = _jsonwebtoken2.default.sign({
                     "iss":"dpi-dpa-mobile-dataplan-adapto@sustained-node-213113.iam.gserviceaccount.com",
                     "scope":"https://www.googleapis.com/auth/dataplansharing",
