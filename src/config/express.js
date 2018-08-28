@@ -178,21 +178,13 @@ var Express = function () {
         value:async function resToken(req,res){
                      let userKey = req.params.userKey;
                       var header = {};
-                       var agent = new _https2.default.Agent({
-                             rejectUnauthorized: false
-                        });
-                      console.info(userKey);
                     header['Content-Type'] ='application/json';
-                    header['httpsAgent']=agent;
                     var body = {};
                     body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
                     body['timeout'] = 10000;
                     body['assertion']=userKey;
                     var url = "https://www.googleapis.com/oauth2/v4/token";
-                console.log("body: grant: "+body['grant_type']+"  assert: "+body['assertion']);
-                console.log("Headder"+header['Content-Type']);
                 var resData = await _axios2.default.post(url,body,header);
-                console.log("T");
                 console.log(resData.data);
                 res.json({message:resData.data});
         }
