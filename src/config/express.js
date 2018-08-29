@@ -57,7 +57,7 @@ var _middlewares = require('../app/middlewares');
 
 var _constants = require('../app/utils/constants');
 
-var _service = require('../app/utils/class');
+var _service = require('../app/services');
 
 var _outbound = require('../app/controllers/outbound');
 
@@ -130,32 +130,26 @@ var Express = function () {
     }, {
         key: 'getCpid',
         value: function getCpid() {
-            // route to dialogflow
             this.express.get('/', _outbound.getCpId);
         }
     }, {
         key: 'getPlanStatus',
         value: function getPlanStatus() {
-            // route to dialogflow
             this.express.get('/:userKey/planStatus',_outbound.getPlanStatus);
         }
     }, {
         key: 'getPlanOffer',
         value: function getPlanOffer() {
-            // route to dialogflow
             this.express.get('/:userKey/planOffer',_outbound.getPlanOffer);
         }
     }, {
         key: 'getPurchasePlan',
         value: function getPurchasePlan() {
-
-            // route to dialogflow
             this.express.post('/:userKey/purchasePlan',_outbound.getPurchasePlan);
         }
     }, {
         key: 'getEligibility',
         value: function getEligibility() {
-            // route to dialogflow
             this.express.get('/:userKey/Eligibility/:planId',_outbound.getEligibility);
         }
     }, {
@@ -166,31 +160,29 @@ var Express = function () {
     },{
         key: 'getDpaStatus',
         value:  function getDpaStatus() {
-            // route to dialogflow
             this.express.get('/dpaStatus',_outbound.getDpaStatus);
         }
     },{
         key: 'getToken',
         value:  function getToken() {
-            // route to dialogflow
-            this.express.get('/:userKey/getToken',this.resToken);
+            this.express.get('/:userKey/getToken',_outbound.getToken);
         }
     } ,{
         key:'resToken',
         value:async function resToken(req,res){
-                      let userKey = req.params.userKey;
-                       var header = {'Content-Type':'application/json'};
-                       var body = {
-                           'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                           'timeout':10000,
-                           'assertion':userKey
-                       }
-                       var axiosObj = new _service.axiosService(_constants.ENV.BASE_API_GOOGLE);
-                       axiosObj.setHeaders(header);
-                       axiosObj.setBody(body);
-                       var resData = await axiosObj.http.post('/oauth2/v4/token');
-                       console.log(resData.data);
-                       res.json({message:resData.data});
+                    //   let userKey = req.params.userKey;
+                    //    var header = {'Content-Type':'application/json'};
+                    //    var body = {
+                    //        'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                    //        'timeout':10000,
+                    //        'assertion':userKey
+                    //    }
+                    //    var axiosObj = new _service.axiosService(_constants.ENV.BASE_API_GOOGLE);
+                    //    axiosObj.setHeaders(header);
+                    //    axiosObj.setBody(body);
+                    //    var resData = await axiosObj.http.post('/oauth2/v4/token');
+                    //    console.log(resData.data);
+                    //    res.json({message:resData.data});
         }
     }, {
         key: 'listen',

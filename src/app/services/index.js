@@ -88,3 +88,16 @@ Object.keys(_checkRemaining).forEach(function (key) {
   });
 });
 
+var _getToken = require('./getToken');
+
+Object.keys(_getToken).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _getToken[key];
+    }
+  });
+});
+
+
