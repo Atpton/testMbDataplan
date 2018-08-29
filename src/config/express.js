@@ -26,13 +26,6 @@ var _https = require('https');
 
 var _https2 = _interopRequireDefault(_https);
 
-var _axios = require('axios');
-
-var axios = require('axios');
-
-var _axios2 = _interopRequireDefault(_axios);
-
-
 var _http = require('http');
 
 var _http2 = _interopRequireDefault(_http);
@@ -70,23 +63,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
-_axios2.default.defaults.timeout = 6000;
-
-_axios2.default.interceptors.request.use(function (config) {
-    config.requestTime = new Date().getTime();
-    return config;
-}, function (err) {
-    return Promise.reject(err);
-});
-
-_axios2.default.interceptors.response.use(function (res) {
-  //  logger.logService({}, res.config, res, res.request.connection);
-    return res;
-}, function (err) {
-    //logger.logService(err, err.config, {}, err.request.connection);
-    return Promise.reject(err);
-});
-
 
 var Express = function () {
     function Express(oauth, logger) {
@@ -104,7 +80,6 @@ var Express = function () {
         this.getRegister = this.getRegister.bind(this);
         this.getDpaStatus = this.getDpaStatus.bind(this);
         this.getToken = this.getToken.bind(this);
-        this.resToken = this.resToken.bind(this);
         this.listen = this.listen.bind(this);
     }
 
@@ -167,24 +142,7 @@ var Express = function () {
         value:  function getToken() {
             this.express.get('/:userKey/getToken',_outbound.getToken);
         }
-    } ,{
-        key:'resToken',
-        value:async function resToken(req,res){
-                    //   let userKey = req.params.userKey;
-                    //    var header = {'Content-Type':'application/json'};
-                    //    var body = {
-                    //        'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                    //        'timeout':10000,
-                    //        'assertion':userKey
-                    //    }
-                    //    var axiosObj = new _service.axiosService(_constants.ENV.BASE_API_GOOGLE);
-                    //    axiosObj.setHeaders(header);
-                    //    axiosObj.setBody(body);
-                    //    var resData = await axiosObj.http.post('/oauth2/v4/token');
-                    //    console.log(resData.data);
-                    //    res.json({message:resData.data});
-        }
-    }, {
+    } , {
         key: 'listen',
         value: function listen() {
             this.setConfig();
@@ -199,7 +157,7 @@ var Express = function () {
             this.getRegister();
             this.getDpaStatus();
             this.getToken();
-            var port =process.env.PORT || process.env.APP_PORT;
+            var port = process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
                 // var certificate = _fs2.default.readFileSync(_constants.ENV.SSL_CERT, 'utf8').toString();
