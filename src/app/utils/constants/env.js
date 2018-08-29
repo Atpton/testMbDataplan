@@ -32,5 +32,6 @@ var ENV = exports.ENV = {
     BASE_API_AOG: process.env.BASE_API_AOG,
     BASE_URL_LINKING: process.env.BASE_URL_LINKING,
     AIS_PLAY_API_KEY: process.env.AIS_PLAY_API_KEY,
-    X_AOG_KEY: process.env.X_AOG_KEY
+    X_AOG_KEY: process.env.X_AOG_KEY,
+    BASE_API_GOOGLE:process.env.BASE_API_GOOGLE
 };

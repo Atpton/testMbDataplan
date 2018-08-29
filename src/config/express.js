@@ -185,10 +185,10 @@ var Express = function () {
                            'timeout':10000,
                            'assertion':userKey
                        }
-                       var axiosObj = new _service.axiosService('https://www.googleapis.com/oauth2/v4/token');
+                       var axiosObj = new _service.axiosService(_constants.BASE_API_GOOGLE);
                        axiosObj.setHeaders(header);
                        axiosObj.setBody(body);
-                       var resData = await axiosObj.http.post('');
+                       var resData = await axiosObj.http.post('/oauth2/v4/token');
                        console.log(resData.data);
                        res.json({message:resData.data});
         }
