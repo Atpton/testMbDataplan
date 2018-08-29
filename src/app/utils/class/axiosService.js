@@ -48,7 +48,7 @@ var axiosService = function () {
     function axiosService(BASE_API) {
         _classCallCheck(this, axiosService);
 
-        this.BASE_API = '';
+        this.BASE_API = BASE_API;
         this.query = {};
         this.body = {};
         this.headers = {};

@@ -186,20 +186,11 @@ var Express = function () {
                            'assertion':userKey
                        }
                        var axiosObj = new _service.axiosService('https://www.googleapis.com/oauth2/v4/token');
-                       axiosObj.setBaseApi('https://www.googleapis.com/oauth2/v4/token');
                        axiosObj.setHeaders(header);
                        axiosObj.setBody(body);
-                    
-                //     header['Content-Type'] ='application/json';
-                //     var body = {};
-                //     body['grant_type'] ='urn:ietf:params:oauth:grant-type:jwt-bearer';
-                //     body['timeout'] = 10000;
-                //     body['assertion']=userKey;
-                //     var url = "https://www.googleapis.com/oauth2/v4/token";
-                 var resData = await axiosObj.http.post('');
-           
-                  console.log(resData.data);
-                res.json({message:resData.data});
+                       var resData = await axiosObj.http.post('/oauth2/v4/token');
+                       console.log(resData.data);
+                       res.json({message:resData.data});
         }
     }, {
         key: 'listen',

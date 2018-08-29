@@ -29,6 +29,7 @@
             "BASE_API_AISPLAY": "https://aog.ais-vidnt.com/assist/playbot",
             "BASE_IMG_URL": "http://110.49.202.141/CPC-FE-SERVICE/cpc-api/v1/download/AI_Content",
             "BASE_URL_LINKING": "http://iot-srf.ais.co.th:8080",
+            "BASE_API_GOOGLE":"https://www.googleapis.com",
             "AIS_PLAY_API_KEY": "ais_gwsXavC12Y4zng4yEp0lXwqf2vobHPXYh1DbV0Re",
             "X_AOG_KEY": "QWlzQEFvZy1ham9pYWRwd2Vpdm5wT2g5U0xrZFZKdzYwSkZjOXBpd2VqdmIycG93bg==",
             "JWT_OL5_SECRET": "SRFPTOKENKEY",
