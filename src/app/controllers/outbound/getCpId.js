@@ -32,6 +32,8 @@ var getCpId = exports.getCpId = function getCpId(req,res, next) {
             console.info(`appID :${app}`);
            let checkAppID  = app && _constants.APPID.APPIDs.findIndex(element => element===app);
             if(app && checkAppID > -1){
+                 //console.info(req.headder);
+                 console.info(req.body);
                  var initTime =Math.floor(Date.now() / 1000);
                  var data = `0932780014,${initTime}`;
                  var CPID = _base64_2.default.encode(_aes256_2.default.encrypt(_constants.ENV.KEY,data));
