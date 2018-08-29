@@ -9,6 +9,14 @@ var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 var _constants = require('../../utils/constants');
 
+var _aes256 = require('aes256');
+
+var _aes256_2 = _interopRequireDefault(_aes256);
+
+var _base64 = require('base-64');
+
+var _base64_2 = _interopRequireDefault(_base64);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Object.defineProperty(exports, "__esModule", {
@@ -24,15 +32,17 @@ var getCpId = exports.getCpId = function getCpId(req,res, next) {
             console.info(`appID :${app}`);
            let checkAppID  = app && _constants.APPID.APPIDs.findIndex(element => element===app);
             if(app && checkAppID > -1){
-              var key =_fs2.default.readFileSync('./privatekey/privatekey.key', 'utf8').toString();
-                var CPID = _jsonwebtoken2.default.sign({
-                    "iss":"dpi-dpa-mobile-dataplan-adapto@sustained-node-213113.iam.gserviceaccount.com",
-                    "scope":"https://www.googleapis.com/auth/dataplansharing",
-                    "aud":"https://www.googleapis.com/oauth2/v4/token",
-                    "exp":Math.floor(Date.now() / 1000) + (60*60),
-                    "iat":Math.floor(Date.now() / 1000),
-                    "MSISDN":'0932780014'
-                },key,{ algorithm: 'RS256' });
+            //   var key =_fs2.default.readFileSync('./privatekey/privatekey.key', 'utf8').toString();
+            //     var CPID = _jsonwebtoken2.default.sign({
+            //         "iss":"dpi-dpa-mobile-dataplan-adapto@sustained-node-213113.iam.gserviceaccount.com",
+            //         "scope":"https://www.googleapis.com/auth/dataplansharing",
+            //         "aud":"https://www.googleapis.com/oauth2/v4/token",
+            //         "exp":Math.floor(Date.now() / 1000) + (60*60),
+            //         "iat":Math.floor(Date.now() / 1000),
+            //         "MSISDN":'0932780014'
+            //     },key,{ algorithm: 'RS256' });
+                 var data = `0932780014,${Math.floor(Date.now() / 1000)}`;
+                 var CPID = _base64_2.default.encode(_aes256_2.default.encrypt(_constants.ENV.KEY,data));
                  console.log("CPID");
                  res.status(200).json({ cpid: CPID ,"ttlSeconds": 2592000});
             }else{

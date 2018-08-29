@@ -58,6 +58,14 @@ var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
 
+var _aes256 = require('aes256');
+
+var _aes256_2 = _interopRequireDefault(_aes256);
+
+var _base64 = require('base-64');
+
+var _base64_2 = _interopRequireDefault(_base64);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -80,6 +88,7 @@ var Express = function () {
         this.getRegister = this.getRegister.bind(this);
         this.getDpaStatus = this.getDpaStatus.bind(this);
         this.getToken = this.getToken.bind(this);
+        this.unpack = this.unpack.bind(this);
         this.listen = this.listen.bind(this);
     }
 
@@ -142,6 +151,16 @@ var Express = function () {
         value:  function getToken() {
             this.express.get('/:userKey/getToken',_outbound.getToken);
         }
+    },{
+        key:'unpack',
+        value:function unpack(){
+            this.express.get('/:userKey/unpack',(req,res)=>{
+                var userKey = req.params.userKey;
+                var unpackData =_aes256_2.default.decrypt(_constants.ENV.KEY,_base64_2.default.decode(userKey));
+                var spiltData = unpackData.split(',');
+                res.status(200).json({MSISDN:spiltData[0],TIMESTAMP:spiltData[1]});
+            });
+        }
     } , {
         key: 'listen',
         value: function listen() {
@@ -157,6 +176,7 @@ var Express = function () {
             this.getRegister();
             this.getDpaStatus();
             this.getToken();
+            this.unpack();
             var port = process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
