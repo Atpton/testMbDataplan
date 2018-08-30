@@ -103,3 +103,15 @@ Object.keys(_getToken).forEach(function (key) {
     }
   });
 });
+
+var _getSignToken = require('./getSignToken');
+
+Object.keys(_getSignToken).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _getSignToken[key];
+    }
+  });
+});

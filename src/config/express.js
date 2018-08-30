@@ -161,6 +161,11 @@ var Express = function () {
                 res.status(200).json({MSISDN:spiltData[0],TIMESTAMP:spiltData[1]});
             });
         }
+    },{
+        key:'getSignToken',
+        value:function getSignToken(){
+             this.express.get('/getSignToken',_outbound.getSignToken);
+        }
     } , {
         key: 'listen',
         value: function listen() {
@@ -177,6 +182,7 @@ var Express = function () {
             this.getDpaStatus();
             this.getToken();
             this.unpack();
+            this.getSignToken();
             var port = process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();
