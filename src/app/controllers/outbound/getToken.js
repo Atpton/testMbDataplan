@@ -30,9 +30,9 @@ var getToken = exports.getToken = function getToken(req,res,next) {
     var body = req.body;
     var status = null;
     var responseObj = {};
-    if( (header['authorization'] && body['grant_type'] && body['scope']) 
-        && (header['authorization'].split(' ').length==2) && (Object.keys(req.body).length == 2) ){
-            if(header['authorization'].split(' ')[1] == _constants.ENV.X_AOG_KEY_TEST){
+    if( (header['Authorization'] && body['grant_type'] && body['scope']) 
+        && (header['Authorization'].split(' ').length==2) && (Object.keys(req.body).length == 2) ){
+            if(header['Authorization'].split(' ')[1] == _constants.ENV.X_AOG_KEY_TEST){
                 var accessToken = _jsonwebtoken2.default.sign({
                     "key":"Test",
                     "exp":Math.floor(Date.now() / 1000) + 3600,
