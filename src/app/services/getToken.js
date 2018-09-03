@@ -32,7 +32,7 @@ var GetToken = exports.GetToken = function (_Service) {
        // this.setHeaders({'Content-Type':'application/json'});
         this.setHeaders({'Content-Type':'application/x-www-form-urlencoded'});
         console.log("Test");
-        this.setBody( JSON.stringify({
+        this.setBody( queryString.stringify({
                            'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
                           // 'grant_type':'urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer',
                            'timeout':10000,
