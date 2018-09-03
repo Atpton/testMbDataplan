@@ -92,14 +92,14 @@ Object.keys(_getDpaStatus).forEach(function (key) {
   });
 });
 
-var _getToken = require('./getToken');
+var _getUserToken = require('./getUserToken');
 
-Object.keys(_getToken).forEach(function (key) {
+Object.keys(_getUserToken).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _getToken[key];
+      return _getUserToken[key];
     }
   });
 });
@@ -112,6 +112,18 @@ Object.keys(_getSignToken).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _getSignToken[key];
+    }
+  });
+});
+
+var _getToken = require('./getToken');
+
+Object.keys(_getToken).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _getToken[key];
     }
   });
 });

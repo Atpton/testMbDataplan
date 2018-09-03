@@ -54,6 +54,8 @@ var _service = require('../app/services');
 
 var _outbound = require('../app/controllers/outbound');
 
+var _aog = require('../app/controllers/aog');
+
 var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
@@ -87,8 +89,9 @@ var Express = function () {
         this.getEligibility = this.getEligibility.bind(this);
         this.getRegister = this.getRegister.bind(this);
         this.getDpaStatus = this.getDpaStatus.bind(this);
-        this.getToken = this.getToken.bind(this);
+        this.getUserToken = this.getUserToken.bind(this);
         this.unpack = this.unpack.bind(this);
+        this.getToken = this.getToken.bind(this);
         this.listen = this.listen.bind(this);
     }
 
@@ -101,6 +104,8 @@ var Express = function () {
             this.express.use(_bodyParser2.default.json());
             // extract session
             this.express.use(_middlewares.extractSession);
+
+            this.express.use(_bodyParser2.default.urlencoded({ extended: true }));
         }
     },  {
         key: 'setLoging',
@@ -114,42 +119,42 @@ var Express = function () {
     }, {
         key: 'getCpid',
         value: function getCpid() {
-            this.express.get('/', _outbound.getCpId);
+            this.express.get('/', [_aog.checkAcessKey,_outbound.getCpId]);
         }
     }, {
         key: 'getPlanStatus',
         value: function getPlanStatus() {
-            this.express.get('/:userKey/planStatus',_outbound.getPlanStatus);
+            this.express.get('/:userKey/planStatus',[_aog.checkAcessKey,_outbound.getPlanStatus]);
         }
     }, {
         key: 'getPlanOffer',
         value: function getPlanOffer() {
-            this.express.get('/:userKey/planOffer',_outbound.getPlanOffer);
+            this.express.get('/:userKey/planOffer',[_aog.checkAcessKey,_outbound.getPlanOffer]);
         }
     }, {
         key: 'getPurchasePlan',
         value: function getPurchasePlan() {
-            this.express.post('/:userKey/purchasePlan',_outbound.getPurchasePlan);
+            this.express.post('/:userKey/purchasePlan',[_aog.checkAcessKey,_outbound.getPurchasePlan]);
         }
     }, {
         key: 'getEligibility',
         value: function getEligibility() {
-            this.express.get('/:userKey/Eligibility/:planId',_outbound.getEligibility);
+            this.express.get('/:userKey/Eligibility/:planId',[_aog.checkAcessKey,_outbound.getEligibility]);
         }
     }, {
         key: 'getRegister',
         value: function getRegister() {
-            this.express.post('/register', _outbound.getRegister);
+            this.express.post('/register', [_aog.checkAcessKey,_outbound.getRegister]);
         }
     },{
         key: 'getDpaStatus',
         value:  function getDpaStatus() {
-            this.express.get('/dpaStatus',_outbound.getDpaStatus);
+            this.express.get('/dpaStatus',[_aog.checkAcessKey,_outbound.getDpaStatus]);
         }
     },{
-        key: 'getToken',
-        value:  function getToken() {
-            this.express.get('/:userKey/getToken',_outbound.getToken);
+        key: 'getUserToken',
+        value:  function getUserToken() {
+            this.express.get('/:userKey/getToken',[_aog.checkAcessKey,_outbound.getUserToken]);
         }
     },{
         key:'unpack',
@@ -164,7 +169,12 @@ var Express = function () {
     },{
         key:'getSignToken',
         value:function getSignToken(){
-             this.express.get('/getSignToken',_outbound.getSignToken);
+             this.express.get('/getSignToken',[_aog.checkAcessKey,_outbound.getSignToken]);
+        }
+    },{
+        key:'getToken',
+        value:function getToken(){
+             this.express.post('/getToken',[_aog.checkAcessKey,_outbound.getToken]);
         }
     } , {
         key: 'listen',
@@ -180,9 +190,10 @@ var Express = function () {
             this.getEligibility();
             this.getRegister();
             this.getDpaStatus();
-            this.getToken();
+            this.getUserToken();
             this.unpack();
             this.getSignToken();
+            this.getToken();
             var port = process.env.PORT || process.env.APP_PORT;
             if (_constants.ENV.ENV === 'production' && _constants.ENV.USE_HTTPS === true) {
                 // var privateKey = _fs2.default.readFileSync(_constants.ENV.SSL_KEY, 'utf8').toString();

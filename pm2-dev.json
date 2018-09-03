@@ -36,7 +36,8 @@
             "JWT_SECRET": "bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4",
             "JWT_EXPIRATION_MINUTES": 15,
             "JWT_DATA_STORAGE": "bjNsbGlrQGVOQzBkM0RhVEBzdDBSQGdl",
-            "KEY":"TEST"
+            "KEY":"TEST",
+            "X_AOG_KEY_TEST":"Z3RhZjpwYXNzd29yZA=="
         }
     }]
 

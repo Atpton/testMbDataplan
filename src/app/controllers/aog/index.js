@@ -15,3 +15,15 @@ Object.keys(_myAISLinking).forEach(function (key) {
     }
   });
 });
+
+var _checkAcessKey = require('./checkAcessKey');
+
+Object.keys(_checkAcessKey).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _checkAcessKey[key];
+    }
+  });
+});
