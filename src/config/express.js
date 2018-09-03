@@ -174,7 +174,7 @@ var Express = function () {
     },{
         key:'getToken',
         value:function getToken(){
-             this.express.post('/getToken',[_aog.checkAcessKey,_outbound.getToken]);
+             this.express.post('/getToken',[_outbound.getToken]);
         }
     } , {
         key: 'listen',
@@ -230,6 +230,5 @@ var Express = function () {
  * Exports express
  * @public
  */
-
 
 exports.default = Express;
