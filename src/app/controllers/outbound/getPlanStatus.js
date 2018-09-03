@@ -19,6 +19,7 @@ var getPlanStatus = exports.getPlanStatus = function getPlanStatus(req,res, next
             console.log("planStatus");
             console.log("userKey:"+userKey);
             console.log("key_type:"+key_type);
+            console.log("MSISDN : "+req.query.MSISDN);
             if(key_type){
                  var responseData ={
                             "name": "AAA",

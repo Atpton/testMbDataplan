@@ -90,7 +90,6 @@ var Express = function () {
         this.getRegister = this.getRegister.bind(this);
         this.getDpaStatus = this.getDpaStatus.bind(this);
         this.getUserToken = this.getUserToken.bind(this);
-        this.unpack = this.unpack.bind(this);
         this.getToken = this.getToken.bind(this);
         this.listen = this.listen.bind(this);
     }
@@ -157,16 +156,6 @@ var Express = function () {
             this.express.get('/:userKey/getToken',[_aog.checkAcessKey,_outbound.getUserToken]);
         }
     },{
-        key:'unpack',
-        value:function unpack(){
-            this.express.get('/:userKey/unpack',(req,res)=>{
-                var userKey = req.params.userKey;
-                var unpackData =_aes256_2.default.decrypt(_constants.ENV.KEY,_base64_2.default.decode(userKey));
-                var spiltData = unpackData.split(',');
-                res.status(200).json({MSISDN:spiltData[0],TIMESTAMP:spiltData[1]});
-            });
-        }
-    },{
         key:'getSignToken',
         value:function getSignToken(){
              this.express.get('/getSignToken',[_aog.checkAcessKey,_outbound.getSignToken]);
@@ -191,7 +180,6 @@ var Express = function () {
             this.getRegister();
             this.getDpaStatus();
             this.getUserToken();
-            this.unpack();
             this.getSignToken();
             this.getToken();
             var port = process.env.PORT || process.env.APP_PORT;

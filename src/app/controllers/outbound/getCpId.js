@@ -39,6 +39,6 @@ var getCpId = exports.getCpId = function getCpId(req,res, next) {
                  res.status(200).json({ cpid: CPID ,"ttlSeconds": initTime});
             }else{
                 let messageError = (app)?`AppId(${app}) isn't corresponding please check it again`:"without parameter app";
-                res.status(200).json({message:messageError});
+                res.status(400).json({message:messageError});
             }
 };
