@@ -27,9 +27,11 @@ var GetToken = exports.GetToken = function (_Service) {
 
         var _this = _possibleConstructorReturn(this, (GetToken.__proto__ || Object.getPrototypeOf(GetToken)).call(this, _constants.ENV.BASE_API_GOOGLE));
         
-        this.setHeaders({'Content-Type':'application/json'});
+       // this.setHeaders({'Content-Type':'application/json'});
+        this.setHeaders({'Content-Type':'application/x-www-form-urlencoded'});
         this.setBody({
-                           'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                         //  'grant_type':'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                           'grant_type':'urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer',
                            'timeout':10000,
                            'assertion':userKey
                      });                   
