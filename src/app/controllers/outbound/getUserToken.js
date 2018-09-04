@@ -10,7 +10,7 @@ exports.getUserToken = undefined;
 var _services = require('../../services');
 
 var getUserToken = exports.getUserToken = async function getUserToken(req,res, next) {
-         let userKey = req.params.userKey;
+         let userKey = req.params.key;
          if(userKey){
              var resData = await new _services.GetToken(userKey).request();
              console.log(resData.data);
