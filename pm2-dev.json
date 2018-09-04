@@ -37,7 +37,7 @@
             "JWT_EXPIRATION_MINUTES": 15,
             "JWT_DATA_STORAGE": "bjNsbGlrQGVOQzBkM0RhVEBzdDBSQGdl",
             "KEY":"TEST",
-            "X_AOG_KEY_TEST":"Z3RhZjpwYXNzd29yZA=="
+            "X_AOG_KEY_TEST":"password"
         }
     }]
 
