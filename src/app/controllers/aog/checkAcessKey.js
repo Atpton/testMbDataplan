@@ -36,7 +36,7 @@ var logger = new _logger2.default().app;
 
 
 
-var _checkUserKey =  function _checkUserKey(req,res,next) {
+var _checkCPID =  function _checkCPID(req,res,next) {
           var userKey = req.params.userKey;
           var key_type = req.query.key_type;
           var status = 401;
@@ -73,7 +73,7 @@ var _checkUserKey =  function _checkUserKey(req,res,next) {
 
 var checkAcessKey = exports.checkAcessKey = function checkAcessKeys(req,res,next) {
             let accessToken =  req.headers['access_token'];
-            var checkUserKey = _checkUserKey.bind(this);
+            var checkUserKey = _checkCPID.bind(this);
             if(accessToken){
                  try{
                     var data =_jsonwebtoken2.default.verify(accessToken,_constants.ENV.KEY);
@@ -91,5 +91,4 @@ var checkAcessKey = exports.checkAcessKey = function checkAcessKeys(req,res,next
                  }
             }
             res.sendStatus(401);
-            
 };

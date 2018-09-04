@@ -28,11 +28,18 @@ exports.getToken = undefined;
 var getToken = exports.getToken = function getToken(req,res,next) {
     var header = req.headers;
     var body = req.body;
-    var status = null;
     var responseObj = {};
+    try{
+        responseObj = {data:{error:"invalid_client"},status:401};
+    }catch(err){
+        console.info(err.message);
+    }
     if( (header['authorization'] && body['grant_type'] && body['scope']) 
         && (header['authorization'].split(' ').length==2) && (Object.keys(req.body).length == 2) ){
-            if(header['authorization'].split(' ')[1] == _constants.ENV.X_AOG_KEY_TEST){
+            var decodeKey = _base64_2.default.decode(header['authorization'].split(' ')[1]);
+            var clientId = decodeKey.split(':')[0];
+            var authorKey = decodeKey.split(':')[1];
+            if(authorKey === _constants.ENV.X_AOG_KEY_TEST){
                 var accessToken = _jsonwebtoken2.default.sign({
                     "key":"Test",
                     "exp":Math.floor(Date.now() / 1000) + 3600,
