@@ -30,36 +30,37 @@ var getToken = exports.getToken = function getToken(req,res,next) {
     var body = req.body;
     var responseObj = {};
     try{
-        responseObj = {data:{error:"invalid_client"},status:401};
+            if( (header['authorization'] && body['grant_type'] && body['scope']) 
+            && (header['authorization'].split(' ').length==2) && (Object.keys(req.body).length == 2) ){
+                var decodeKey = _base64_2.default.decode(header['authorization'].split(' ')[1]);
+                var clientId = decodeKey.split(':')[0];
+                var authorKey = decodeKey.split(':')[1];
+                if(authorKey === _constants.ENV.X_AOG_KEY_TEST){
+                    var accessToken = _jsonwebtoken2.default.sign({
+                        "key":"Test",
+                        "exp":Math.floor(Date.now() / 1000) + 3600,
+                        "iat":Math.floor(Date.now() / 1000)
+                    },_constants.ENV.KEY);
+                    console.info(`accessToken : ${accessToken}`);
+                    responseObj = {
+                                    data:{
+                                        "access_token":accessToken,
+                                        "token_type":"Basic",
+                                        "expires_in":3600,
+                                        },
+                                    status:200
+                                };
+                }else{
+                responseObj = {data:{error:"invalid_client"},status:401};
+                }     
+            }else{
+                responseObj = {data:{error:"invalid_request"},status:400};
+            }
     }catch(err){
         console.info(err.message);
+        responseObj = {data:{error:"invalid_client"},status:401};
     }
-    if( (header['authorization'] && body['grant_type'] && body['scope']) 
-        && (header['authorization'].split(' ').length==2) && (Object.keys(req.body).length == 2) ){
-            var decodeKey = _base64_2.default.decode(header['authorization'].split(' ')[1]);
-            var clientId = decodeKey.split(':')[0];
-            var authorKey = decodeKey.split(':')[1];
-            if(authorKey === _constants.ENV.X_AOG_KEY_TEST){
-                var accessToken = _jsonwebtoken2.default.sign({
-                    "key":"Test",
-                    "exp":Math.floor(Date.now() / 1000) + 3600,
-                    "iat":Math.floor(Date.now() / 1000)
-                },_constants.ENV.KEY);
-                console.info(`accessToken : ${accessToken}`);
-                responseObj = {
-                                data:{
-                                    "access_token":accessToken,
-                                    "token_type":"Basic",
-                                    "expires_in":3600,
-                                    },
-                                status:200
-                              };
-            }else{
-               responseObj = {data:{error:"invalid_client"},status:401};
-            }     
-    }else{
-        responseObj = {data:{error:"invalid_request"},status:400};
-    }
+    
     res.set({
              'Content-type': 'application/json;charset=UTF-8',
              'Cache-Control': 'no-store',
