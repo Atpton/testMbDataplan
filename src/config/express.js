@@ -153,12 +153,12 @@ var Express = function () {
     },{
         key: 'getUserToken',
         value:  function getUserToken() {
-            this.express.get('/:Key/getToken',[_aog.checkAcessKey,_outbound.getUserToken]);
+            this.express.get('/:Key/getToken',[_outbound.getUserToken]);
         }
     },{
         key:'getSignToken',
         value:function getSignToken(){
-             this.express.get('/getSignToken',[_aog.checkAcessKey,_outbound.getSignToken]);
+             this.express.get('/getSignToken',[_outbound.getSignToken]);
         }
     },{
         key:'getToken',
